@@ -5,6 +5,7 @@ class ValidityJS {
       errorClass: 'error',
       messages: {},
       onSubmit: () => {},
+      conditionalValidation: {}
     }, options);
     this.onSubmit = this.onSubmit.bind(this);
     this.form.addEventListener('submit', this.onSubmit);
@@ -16,7 +17,9 @@ class ValidityJS {
     let isValid = true;
     
     fields.forEach(field => {
-      if (!this.validateField(field)) {
+      const shouldValidate = this.options.conditionalValidation[field.name] ? this.options.conditionalValidation[field.name]() : true;
+      
+      if (shouldValidate && !this.validateField(field)) {
         isValid = false;
       }
     });
@@ -27,22 +30,29 @@ class ValidityJS {
   }
   
   async validateField(field) {
-    if (field.hasAttribute('required') && !field.value) {
-      const errorMessage = this.options.messages[field.name] || this.options.messages.default || 'Please fill out this field';
-      this.showError(field, errorMessage);
-      return false;
-    }
+    const shouldValidate = this.options.conditionalValidation[field.name] ? this.options.conditionalValidation[field.name]() : true;
     
-    if (field.dataset.asyncValidation) {
-      const validationFunction = window[field.dataset.asyncValidation];
-      if (validationFunction) {
-        const isValid = await validationFunction(field.value);
-        if (!isValid) {
-          const errorMessage = this.options.messages[field.name] || this.options.messages.default || 'Invalid input';
-          this.showError(field, errorMessage);
-          return false;
+    if (shouldValidate) {
+      if (field.hasAttribute('required') && !field.value) {
+        const errorMessage = this.options.messages[field.name] || this.options.messages.default || 'Please fill out this field';
+        this.showError(field, errorMessage);
+        return false;
+      }
+      
+      if (field.dataset.asyncValidation) {
+        const validationFunction = window[field.dataset.asyncValidation];
+        if (validationFunction) {
+          const isValid = await validationFunction(field.value);
+          if (!isValid) {
+            const errorMessage = this.options.messages[field.name] || this.options.messages.default || 'Invalid input';
+            this.showError(field, errorMessage);
+            return false;
+          }
         }
       }
+      
+      this.hideError(field);
+      return true;
     }
     
     this.hideError(field);
