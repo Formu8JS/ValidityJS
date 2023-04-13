@@ -26,11 +26,23 @@ class ValidityJS {
     }
   }
   
-  validateField(field) {
+  async validateField(field) {
     if (field.hasAttribute('required') && !field.value) {
       const errorMessage = this.options.messages[field.name] || this.options.messages.default || 'Please fill out this field';
       this.showError(field, errorMessage);
       return false;
+    }
+    
+    if (field.dataset.asyncValidation) {
+      const validationFunction = window[field.dataset.asyncValidation];
+      if (validationFunction) {
+        const isValid = await validationFunction(field.value);
+        if (!isValid) {
+          const errorMessage = this.options.messages[field.name] || this.options.messages.default || 'Invalid input';
+          this.showError(field, errorMessage);
+          return false;
+        }
+      }
     }
     
     this.hideError(field);
