@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ValidityJS Example</title>
+  <title>ValidityJS Examples</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
@@ -71,9 +71,11 @@
 </head>
 <body>
   <div class="container">
-    <h1>ValidityJS Example</h1>
-    <p>ValidityJS is a lightweight JavaScript library for form validation. It allows you to easily validate form fields using customizable error messages and CSS classes.</p>
-    <form id="my-form">
+    <h1>ValidityJS Examples</h1>
+    
+    <h2>Example 1</h2>
+    <p>In this example, the form will be submitted successfully only if all fields are filled out correctly.</p>
+    <form id="example1-form">
       <label>
         First Name:
         <input type="text" name="first-name" required>
@@ -90,35 +92,43 @@
         Password:
         <input type="password" name="password" minlength="8" required>
       </label>
+      <button type="submit">Submit</button>
+    </form>
+    <hr>
+    
+    <h2>Example 2</h2>
+    <p>In this example, the form will be submitted successfully as long as the email and password fields are filled out correctly. The first name and last name fields are optional.</p>
+    <form id="example2-form">
       <label>
-        Favorite Color:
-        <select name="color" required>
-          <option value="">-- Please choose a color --</option>
-          <option value="red">Red</option>
-          <option value="green">Green</option>
-          <option value="blue">Blue</option>
-        </select>
+        First Name:
+        <input type="text" name="first-name">
       </label>
       <label>
-        About You:
-        <textarea name="about" rows="5" required></textarea>
+        Last Name:
+        <input type="text" name="last-name">
+      </label>
+      <label>
+        Email:
+        <input type="email" name="email" required>
+      </label>
+      <label>
+        Password:
+        <input type="password" name="password" minlength="8" required>
       </label>
       <button type="submit">Submit</button>
     </form>
-  </div>
-  <script src="validity.js"></script>
-  <script>
-    const form = document.querySelector('#my-form');
-    const validator = new ValidityJS(form, {
-      messages: {
-        default: 'There was an error with your submission',
-        email: 'Please enter a valid email address',
-        password: 'Your password must be at least 8 characters long',
-      },
-      onSubmit: () => {
-        alert('Form submitted successfully!');
-      },
-    });
-  </script>
-</body>
-</html>
+    <script>
+      const form2 = document.querySelector('#example2-form');
+      const validator2 = new ValidityJS(form2, {
+        errorClass: 'my-error-class',
+        messages: {
+          email: 'Please enter a valid email address',
+          password: 'Your password must be at least 8 characters long',
+          default: 'There was an error with your submission'
+        },
+        onSubmit: () => {
+          alert('Form submitted successfully!');
+        },
+      });
+    </script>
+    
