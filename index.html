@@ -72,7 +72,7 @@
 <body>
   <div class="container">
     <h1>ValidityJS Examples</h1>
-    
+
     <h2>Example 1</h2>
     <p>In this example, the form will be submitted successfully only if all fields are filled out correctly.</p>
     <form id="example1-form">
@@ -95,7 +95,7 @@
       <button type="submit">Submit</button>
     </form>
     <hr>
-    
+
     <h2>Example 2</h2>
     <p>In this example, the form will be submitted successfully as long as the email and password fields are filled out correctly. The first name and last name fields are optional.</p>
     <form id="example2-form">
@@ -114,21 +114,170 @@
       <label>
         Password:
         <input type="password" name="password" minlength="8" required>
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-    <script>
-      const form2 = document.querySelector('#example2-form');
-      const validator2 = new ValidityJS(form2, {
-        errorClass: 'my-error-class',
-        messages: {
-          email: 'Please enter a valid email address',
-          password: 'Your password must be at least 8 characters long',
-          default: 'There was an error with your submission'
-        },
-        onSubmit: () => {
-          alert('Form submitted successfully!');
-        },
-      });
-    </script>
-    
+    </label>
+    <button type="submit">Submit</button>
+  </form>
+  <script>
+    const form2 = document.querySelector('#example2-form');
+    const validator2 = new ValidityJS(form2, {
+      errorClass: 'my-error-class',
+      messages: {
+        email: 'Please enter a valid email address',
+        password: 'Your password must be at least 8 characters long',
+        default: 'There was an error with your submission'
+      },
+      onSubmit: () => {
+        alert('Form submitted successfully!');
+      },
+    });
+  </script>
+  <hr>
+
+  <h2>Example 3</h2>
+  <p>In this example, the form will be submitted successfully if the email and password fields are filled out correctly, and the checkbox is checked.</p>
+  <form id="example3-form">
+    <label>
+      Email:
+      <input type="email" name="email" required>
+    </label>
+    <label>
+      Password:
+      <input type="password" name="password" minlength="8" required>
+    </label>
+    <label>
+      <input type="checkbox" name="terms" required>
+      I agree to the terms and conditions
+    </label>
+    <button type="submit">Submit</button>
+  </form>
+  <script>
+    const form3 = document.querySelector('#example3-form');
+    const validator3 = new ValidityJS(form3, {
+      messages: {
+        email: 'Please enter a valid email address',
+        password: 'Your password must be at least 8 characters long',
+        terms: 'Please agree to the terms and conditions',
+        default: 'There was an error with your submission'
+      },
+      onSubmit: () => {
+        alert('Form submitted successfully!');
+      },
+    });
+  </script>
+  <hr>
+
+  <h2>Example 4</h2>
+  <p>In this example, the form will be submitted successfully if at least one of the radio buttons is selected.</p>
+  <form id="example4-form">
+    <label>
+      <input type="radio" name="gender" value="male" required>
+      Male
+    </label>
+    <label>
+      <input type="radio" name="gender" value="female" required>
+      Female
+    </label>
+    <label>
+      <input type="radio" name="gender" value="other" required>
+      Other
+    </label>
+    <button type="submit">Submit</button>
+  </form>
+  <script>
+    const form4 = document.querySelector('#example4-form');
+    const validator4 = new ValidityJS(form4, {
+      messages: {
+        gender: 'Please select your gender',
+        default: 'There was an error with your submission'
+      },
+      onSubmit: () => {
+        alert('Form submitted successfully!');
+      },
+    });
+  </script>
+  <hr>
+
+  <h2>Example 5</h2>
+  <p>In this example, the form will be submitted successfully if the password fields match.</p>
+  <form id="example5-form">
+    <label>
+      Email:
+      <input type="email" name="email" required>
+    </label>
+    <label>
+      Password:
+      <input type="password" name="password" minlength="8" required>
+    </label>
+    <label>
+      Confirm Password:
+      <input type="password" name="confirm-password" minlength="8" required>
+    </label>
+    <button type="submit">Submit</button>
+</form>
+<script>
+  const form5 = document.querySelector('#example5-form');
+  const validator5 = new ValidityJS(form5, {
+    messages: {
+      email: 'Please enter a valid email address',
+      password: 'Your password must be at least 8 characters long',
+      'confirm-password': 'Passwords do not match',
+      default: 'There was an error with your submission'
+    },
+    onSubmit: () => {
+      alert('Form submitted successfully!');
+    },
+    conditionalValidation: {
+      'confirm-password': () => {
+        const password = form5.querySelector('input[name="password"]');
+        return password.value === form5.querySelector('input[name="confirm-password"]').value;
+      }
+    }
+  });
+</script>
+<hr>
+
+<h2>Example 6</h2>
+<p>In this example, the form will be submitted successfully if the password fields match and the user agrees to the terms and conditions.</p>
+<form id="example6-form">
+  <label>
+    Email:
+    <input type="email" name="email" required>
+  </label>
+  <label>
+    Password:
+    <input type="password" name="password" minlength="8" required>
+  </label>
+  <label>
+    Confirm Password:
+    <input type="password" name="confirm-password" minlength="8" required>
+  </label>
+  <label>
+    <input type="checkbox" name="terms" required>
+    I agree to the terms and conditions
+  </label>
+  <button type="submit">Submit</button>
+</form>
+<script>
+  const form6 = document.querySelector('#example6-form');
+  const validator6 = new ValidityJS(form6, {
+    messages: {
+      email: 'Please enter a valid email address',
+      password: 'Your password must be at least 8 characters long',
+      'confirm-password': 'Passwords do not match',
+      terms: 'Please agree to the terms and conditions',
+      default: 'There was an error with your submission'
+    },
+    onSubmit: () => {
+      alert('Form submitted successfully!');
+    },
+    conditionalValidation: {
+      'confirm-password': () => {
+        const password = form6.querySelector('input[name="password"]');
+        return password.value === form6.querySelector('input[name="confirm-password"]').value;
+      }
+    }
+  });
+</script>
+</div>
+</body>
+</html>
