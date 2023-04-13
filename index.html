@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation Example</title>
+  <script src="form-validator.js"></script>
+  <style>
+    .error {
+      border-color: red;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.8em;
+    }
+  </style>
+</head>
+<body>
+  <form id="my-form">
+    <label>
+      Name:
+      <input type="text" name="name" required>
+    </label>
+    <br>
+    <label>
+      Email:
+      <input type="email" name="email" required>
+    </label>
+    <br>
+    <label>
+      Message:
+      <textarea name="message" required></textarea>
+    </label>
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+  <script>
+    const form = document.querySelector('#my-form');
+    const validator = new FormValidator(form, {
+      errorClass: 'error',
+      errorMessage: 'Please fill out this field',
+      onSubmit: () => {
+        alert('Form submitted successfully!');
+      },
+    });
+  </script>
+</body>
+</html>
