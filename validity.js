@@ -1,9 +1,9 @@
-class FormValidator {
+class ValidityJS {
   constructor(form, options = {}) {
     this.form = form;
     this.options = Object.assign({
       errorClass: 'error',
-      errorMessage: 'Please fill out this field',
+      messages: {},
       onSubmit: () => {},
     }, options);
     this.onSubmit = this.onSubmit.bind(this);
@@ -28,7 +28,8 @@ class FormValidator {
   
   validateField(field) {
     if (field.hasAttribute('required') && !field.value) {
-      this.showError(field, this.options.errorMessage);
+      const errorMessage = this.options.messages[field.name] || this.options.messages.default || 'Please fill out this field';
+      this.showError(field, errorMessage);
       return false;
     }
     

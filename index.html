@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Form Validation Example</title>
-  <script src="validity.js"></script>
+  <meta charset="UTF-8">
+  <title>ValidityJS Example</title>
   <style>
     .error {
-      border-color: red;
+      border: 2px solid red;
     }
     .error-message {
       color: red;
@@ -14,6 +14,8 @@
   </style>
 </head>
 <body>
+  <h1>ValidityJS Example</h1>
+  <p>ValidityJS is a lightweight JavaScript library for form validation. It allows you to easily validate form fields using customizable error messages and CSS classes.</p>
   <form id="my-form">
     <label>
       Name:
@@ -26,17 +28,21 @@
     </label>
     <br>
     <label>
-      Message:
-      <textarea name="message" required></textarea>
+      Password:
+      <input type="password" name="password" minlength="8" required>
     </label>
     <br>
     <button type="submit">Submit</button>
   </form>
+  <script src="validity.js"></script>
   <script>
     const form = document.querySelector('#my-form');
-    const validator = new FormValidator(form, {
-      errorClass: 'error',
-      errorMessage: 'Please fill out this field',
+    const validator = new ValidityJS(form, {
+      messages: {
+        default: 'There was an error with your submission',
+        email: 'Please enter a valid email address',
+        password: 'Your password must be at least 8 characters long',
+      },
       onSubmit: () => {
         alert('Form submitted successfully!');
       },
