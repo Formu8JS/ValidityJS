@@ -15,8 +15,8 @@ ValidityJS is a lightweight JavaScript library for client-side form validation. 
 
 Download the `validity.js` file and include it in your HTML file using a script tag:
 
-```html
-<script src="validity.js"></script>
+  ```html
+  <script src="validity.js"></script>
 
 ## Usage
 
