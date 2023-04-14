@@ -2,282 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ValidityJS Examples</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ValidityJS Demo</title>
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    p {
-      margin-bottom: 20px;
-    }
-    form {
-      background-color: #fff;
-      border-radius: 5px;
-      padding: 20px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-    label {
-      display: block;
-      margin-bottom: 10px;
-    }
-    input,
-    select,
-    textarea {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      margin-bottom: 10px;
-      background-color: #f7f7f7;
-    }
-    button {
-      display: block;
-      margin-top: 20px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: #fff;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #3e8e41;
-    }
     .error {
-      border: 2px solid red;
+      border: 1px solid red;
     }
+
     .error-message {
       color: red;
-      font-size: 0.8em;
+    }
+
+    .error-summary {
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>ValidityJS Examples</h1>
+  <h1>ValidityJS Demo</h1>
+  <p>This page demonstrates the functionality of the ValidityJS library. It provides validation for required fields, credit card numbers, and phone numbers.</p>
+  <div class="error-summary"></div>
+  <form id="demo-form">
+    <label for="name">Name (required):</label>
+    <input type="text" id="name" name="name" required><br><br>
 
-    <h2>Example 1</h2>
-    <p>In this example, the form will be submitted successfully only if all fields are filled out correctly.</p>
-    <form id="example1-form">
-      <label>
-        First Name:
-        <input type="text" name="first-name" required>
-      </label>
-      <label>
-        Last Name:
-        <input type="text" name="last-name" required>
-      </label>
-      <label>
-        Email:
-        <input type="email" name="email" required>
-      </label>
-      <label>
-        Password:
-        <input type="password" name="password" minlength="8" required>
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-    <hr>
+    <label for="cc-number">Credit Card Number:</label>
+    <input type="text" id="cc-number" name="cc-number" data-cc-number><br><br>
 
-    <h2>Example 2</h2>
-    <p>In this example, the form will be submitted successfully as long as the email and password fields are filled out correctly. The first name and last name fields are optional.</p>
-    <form id="example2-form">
-      <label>
-        First Name:
-        <input type="text" name="first-name">
-      </label>
-      <label>
-        Last Name:
-        <input type="text" name="last-name">
-      </label>
-      <label>
-        Email:
-        <input type="email" name="email" required>
-      </label>
-      <label>
-        Password:
-        <input type="password" name="password" minlength="8" required>
-    </label>
+    <label for="phone-number">Phone Number:</label>
+    <input type="text" id="phone-number" name="phone-number" data-phone-number><br><br>
+
     <button type="submit">Submit</button>
   </form>
+
+  <script src="validity.js"></script>
   <script>
-    const form2 = document.querySelector('#example2-form');
-    const validator2 = new ValidityJS(form2, {
-      errorClass: 'my-error-class',
-      messages: {
-        email: 'Please enter a valid email address',
-        password: 'Your password must be at least 8 characters long',
-        default: 'There was an error with your submission'
-      },
+    // Initialize the ValidityJS library
+    const form = document.getElementById('demo-form');
+    const validity = new ValidityJS(form, {
       onSubmit: () => {
         alert('Form submitted successfully!');
-      },
-    });
-  </script>
-  <hr>
-
-  <h2>Example 3</h2>
-  <p>In this example, the form will be submitted successfully if the email and password fields are filled out correctly, and the checkbox is checked.</p>
-  <form id="example3-form">
-    <label>
-      Email:
-      <input type="email" name="email" required>
-    </label>
-    <label>
-      Password:
-      <input type="password" name="password" minlength="8" required>
-    </label>
-    <label>
-      <input type="checkbox" name="terms" required>
-      I agree to the terms and conditions
-    </label>
-    <button type="submit">Submit</button>
-  </form>
-  <script>
-    const form3 = document.querySelector('#example3-form');
-    const validator3 = new ValidityJS(form3, {
-      messages: {
-        email: 'Please enter a valid email address',
-        password: 'Your password must be at least 8 characters long',
-        terms: 'Please agree to the terms and conditions',
-        default: 'There was an error with your submission'
-      },
-      onSubmit: () => {
-        alert('Form submitted successfully!');
-      },
-    });
-  </script>
-  <hr>
-
-  <h2>Example 4</h2>
-  <p>In this example, the form will be submitted successfully if at least one of the radio buttons is selected.</p>
-  <form id="example4-form">
-    <label>
-      <input type="radio" name="gender" value="male" required>
-      Male
-    </label>
-    <label>
-      <input type="radio" name="gender" value="female" required>
-      Female
-    </label>
-    <label>
-      <input type="radio" name="gender" value="other" required>
-      Other
-    </label>
-    <button type="submit">Submit</button>
-  </form>
-  <script>
-    const form4 = document.querySelector('#example4-form');
-    const validator4 = new ValidityJS(form4, {
-      messages: {
-        gender: 'Please select your gender',
-        default: 'There was an error with your submission'
-      },
-      onSubmit: () => {
-        alert('Form submitted successfully!');
-      },
-    });
-  </script>
-  <hr>
-
-  <h2>Example 5</h2>
-  <p>In this example, the form will be submitted successfully if the password fields match.</p>
-  <form id="example5-form">
-    <label>
-      Email:
-      <input type="email" name="email" required>
-    </label>
-    <label>
-      Password:
-      <input type="password" name="password" minlength="8" required>
-    </label>
-    <label>
-      Confirm Password:
-      <input type="password" name="confirm-password" minlength="8" required>
-    </label>
-    <button type="submit">Submit</button>
-</form>
-<script>
-  const form5 = document.querySelector('#example5-form');
-  const validator5 = new ValidityJS(form5, {
-    messages: {
-      email: 'Please enter a valid email address',
-      password: 'Your password must be at least 8 characters long',
-      'confirm-password': 'Passwords do not match',
-      default: 'There was an error with your submission'
-    },
-    onSubmit: () => {
-      alert('Form submitted successfully!');
-    },
-    conditionalValidation: {
-      'confirm-password': () => {
-        const password = form5.querySelector('input[name="password"]');
-        return password.value === form5.querySelector('input[name="confirm-password"]').value;
       }
-    }
-  });
-</script>
-<hr>
-
-<h2>Example 6</h2>
-<p>In this example, the form will be submitted successfully if the password fields match and the user agrees to the terms and conditions.</p>
-<form id="example6-form">
-  <label>
-    Email:
-    <input type="email" name="email" required>
-  </label>
-  <label>
-    Password:
-    <input type="password" name="password" minlength="8" required>
-  </label>
-  <label>
-    Confirm Password:
-    <input type="password" name="confirm-password" minlength="8" required>
-  </label>
-  <label>
-    <input type="checkbox" name="terms" required>
-    I agree to the terms and conditions
-  </label>
-  <button type="submit">Submit</button>
-</form>
-<script>
-  const form6 = document.querySelector('#example6-form');
-  const validator6 = new ValidityJS(form6, {
-    messages: {
-      email: 'Please enter a valid email address',
-      password: 'Your password must be at least 8 characters long',
-      'confirm-password': 'Passwords do not match',
-      terms: 'Please agree to the terms and conditions',
-      default: 'There was an error with your submission'
-    },
-    onSubmit: () => {
-      alert('Form submitted successfully!');
-    },
-    conditionalValidation: {
-      'confirm-password': () => {
-        const password = form6.querySelector('input[name="password"]');
-        return password.value === form6.querySelector('input[name="confirm-password"]').value;
-      }
-    }
-  });
-</script>
-</div>
+    });
+  </script>
 </body>
 </html>
