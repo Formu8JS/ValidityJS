@@ -4,7 +4,23 @@ ValidityJS is a JavaScript class that can be used to validate form input fields 
 
 ## Installation
 
-To use ValidityJS, simply include the JavaScript file `validity.js` in your HTML file:
+You can use ValidityJS in your project by including the following script tag in your HTML file:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/thedhanawada/ValidityJS@main/validity.js"></script>
+```
+
+Alternatively, you can download the latest release of ValidityJS from the GitHub repository and include it in your project manually. To do this, follow these steps:
+
+- Go to the ValidityJS GitHub repository.
+- Click on the "Releases" tab to see a list of available releases.
+- Download the latest release of ValidityJS, which will be a .js file.
+- Move the .js file into your project's dist or lib directory.
+- In your HTML file, include the following script tag:
+
+```html
+<script src="dist/validity.js"></script>
+```
 
 ## Usage
 
