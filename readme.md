@@ -1,19 +1,46 @@
 # ValidityJS
 
-ValidityJS is a powerful and customizable library for validating form data in JavaScript. It simplifies the process of form validation on a web page and provides a customizable way to handle errors and form submission.
+ValidityJS is a lightweight JavaScript library for client-side form validation. It provides an easy way to validate form inputs such as required fields, credit card numbers, and phone numbers.
+
+## Features
+
+- Required field validation
+- Credit card number validation (Luhn algorithm)
+- US phone number validation
+- Custom error messages
+- Conditional validation
+- Async validation support
+
+## Installation
+
+Download the `validity.js` file and include it in your HTML file using a script tag:
+
+```html
+<script src="validity.js"></script>
 
 ## Usage
 
-To use ValidityJS, create a new instance of the `Validity` class for each form that you want to validate. Pass in the form element and an options object to customize the validation behavior:
+To use ValidityJS, simply create a new instance by passing a reference to the form element you want to validate:
 
 ```javascript
-import Validity from 'validityjs';
+const form = document.getElementById('your-form-id');
+const validity = new ValidityJS(form);
 
-const form = document.querySelector('#my-form');
-const validator = new Validity(form, {
-  errorClass: 'error',
-  errorMessage: 'Please fill out this field',
-  onSubmit: () => {
-    // Do something when the form is submitted and valid
+You can also pass an optional configuration object to customize the validation behavior:
+
+```javascript
+const validity = new ValidityJS(form, {
+  errorClass: 'custom-error-class',
+  messages: {
+    default: 'Custom default error message',
+    'field-name': 'Custom error message for a specific field'
   },
-});
+  onSubmit: () => {
+    // Callback function when the form is submitted successfully
+  },
+  conditionalValidation: {
+    'field-name': () => {
+      // Return true if the field should be validated, false otherwise
+    }
+  },
+  errorPosition: '.custom-error
