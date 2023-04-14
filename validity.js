@@ -1,3 +1,22 @@
+// Set the MIME type for credit-card-type.min.js
+function luhnCheck(num) {
+  let sum = 0;
+  let shouldDouble = false;
+  for (let i = num.length - 1; i >= 0; i--) {
+    let digit = parseInt(num.charAt(i));
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) {
+        digit -= 9;
+      }
+    }
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+  return (sum % 10) === 0;
+}
+
+
 class ValidityJS {
   constructor(form, options = {}) {
     this.form = form;
@@ -82,8 +101,31 @@ class ValidityJS {
   }
 
   validateCreditCardNumber(number) {
-    // ...
+    // Visa
+    var visaPattern = /^4[0-9]{12}(?:[0-9]{3})?$/;
+    // Mastercard
+    var mastercardPattern = /^5[1-5][0-9]{14}$/;
+    // Amex
+    var amexPattern = /^3[47][0-9]{13}$/;
+    // Discover
+    var discoverPattern = /^6(?:011|5[0-9]{2})[0-9]{12}$/;
+  
+    if (visaPattern.test(number)) {
+      return luhnCheck(number);
+    }
+    if (mastercardPattern.test(number)) {
+      return luhnCheck(number);
+    }
+    if (amexPattern.test(number)) {
+      return luhnCheck(number);
+    }
+    if (discoverPattern.test(number)) {
+      return luhnCheck(number);
+    }
+  
+    return false;
   }
+  
 
   validatePhoneNumber(number) {
     // ...
