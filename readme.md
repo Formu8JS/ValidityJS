@@ -1,46 +1,45 @@
 # ValidityJS
 
-ValidityJS is a lightweight JavaScript library for client-side form validation. It provides an easy way to validate form inputs such as required fields, credit card numbers, and phone numbers.
-
-## Features
-
-- Required field validation
-- Credit card number validation (Luhn algorithm)
-- US phone number validation
-- Custom error messages
-- Conditional validation
-- Async validation support
+ValidityJS is a JavaScript class that can be used to validate form input fields in a web page. It provides a customizable validation process for input fields such as credit card numbers and phone numbers, and supports asynchronous validation functions.
 
 ## Installation
 
-Download the `validity.js` file and include it in your HTML file using a script tag:
-
-  ```html
-  <script src="validity.js"></script>
+To use ValidityJS, simply include the JavaScript file `validity.js` in your HTML file:
 
 ## Usage
 
-To use ValidityJS, simply create a new instance by passing a reference to the form element you want to validate:
+To use ValidityJS, create a new instance of the ValidityJS class and pass in the HTML form element to be validated, and any options you want to customize the validation process:
 
 ```javascript
-const form = document.getElementById('your-form-id');
-const validity = new ValidityJS(form);
-
-You can also pass an optional configuration object to customize the validation behavior:
-
-```javascript
-const validity = new ValidityJS(form, {
-  errorClass: 'custom-error-class',
+const form = document.querySelector('form');
+const validator = new ValidityJS(form, {
+  errorClass: 'error',
   messages: {
-    default: 'Custom default error message',
-    'field-name': 'Custom error message for a specific field'
+    username: 'Please enter a valid username'
   },
   onSubmit: () => {
-    // Callback function when the form is submitted successfully
+    alert('Form submitted successfully!');
   },
   conditionalValidation: {
-    'field-name': () => {
-      // Return true if the field should be validated, false otherwise
+    password: () => {
+      return form.querySelector('input[name="username"]').value !== '';
     }
-  },
-  errorPosition: '.custom-error
+  }
+});
+```
+
+**The options object can contain the following properties:**
+
+- errorClass (string): Specifies the CSS class name to apply to input fields with validation errors. Default value is 'error'.
+- messages (object): An object that maps input field names to error messages. Default value is {}.
+- onSubmit (function): A function to be executed when the form is submitted and all input fields have passed validation. Default value is an empty arrow function () => {}.
+- conditionalValidation (object): An object that maps input field names to functions that return a boolean value indicating whether the field should be validated or not. Default value is {}.
+- errorPosition (string): Specifies the selector for the element where error messages should be displayed. Default value is '.error-summary'.
+
+**The ValidityJS class provides the following methods:**
+
+- validateField(field): Validates a single input field. It returns a boolean value indicating whether the field is valid or not.
+- validateCreditCardNumber(number): Validates a credit card number. It returns a boolean value indicating whether the number is valid or not.
+- validatePhoneNumber(number): Validates a phone number. Not implemented in this code snippet.
+- showError(field, message): Adds the error class specified in the options object to the input field and appends an error message to the element specified by the errorPosition property.
+- hideError(field): Removes the error class from the input field and removes any error message element that was appended to the errorPosition element.
