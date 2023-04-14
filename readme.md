@@ -59,3 +59,11 @@ const validator = new ValidityJS(form, {
 - validatePhoneNumber(number): Validates a phone number. Not implemented in this code snippet.
 - showError(field, message): Adds the error class specified in the options object to the input field and appends an error message to the element specified by the errorPosition property.
 - hideError(field): Removes the error class from the input field and removes any error message element that was appended to the errorPosition element.
+
+## License
+
+ValidityJS is released under the [MIT license](https://raw.githubusercontent.com/thedhanawada/ValidityJS/main/LICENSE "MIT license"). This is a permissive open-source software license that allows for free use, modification, and distribution of the software without requiring payment or attribution.
+
+Using an open-source license like the MIT license is important because it ensures that the software can be used and improved upon by as many people as possible. By releasing ValidityJS under the MIT license, we hope to encourage others to use and contribute to the project, and to promote the wider adoption of open-source software in general.
+
+We take the licensing of ValidityJS seriously, and believe that it is a key part of the project's success. We encourage you to read the license in full before using or contributing to the project, and to abide by its terms in your use and distribution of the software.
