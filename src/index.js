@@ -1,4 +1,4 @@
-const creditCardType = require('credit-card-type');
+import creditCardType from 'credit-card-type';
 function luhnCheck(num) {
   let sum = 0;
   let shouldDouble = false;

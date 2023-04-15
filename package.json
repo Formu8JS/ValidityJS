@@ -4,7 +4,9 @@
   "description": "ValidityJS is a powerful and customizable library for validating form data in JavaScript",
   "main": "validity.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "start": "webpack --mode development --watch"
   },
   "repository": {
     "type": "git",
@@ -22,5 +24,12 @@
   "homepage": "https://github.com/thedhanawada/ValidityJS#readme",
   "dependencies": {
     "credit-card-type": "^9.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "babel-loader": "^9.1.2",
+    "webpack": "^5.79.0",
+    "webpack-cli": "^5.0.1"
   }
 }
