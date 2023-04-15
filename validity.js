@@ -1,4 +1,3 @@
-// Set the MIME type for credit-card-type.min.js
 const creditCardType = require('credit-card-type');
 function luhnCheck(num) {
   let sum = 0;
@@ -116,8 +115,11 @@ class ValidityJS {
   }    
 
   validatePhoneNumber(number) {
-    // ...
+    // Adjust the regular expression to match the desired phone number format
+    const phoneNumberRegex = /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+    return phoneNumberRegex.test(number);
   }
+  
 
   showError(field, message) {
     field.classList.add(this.options.errorClass);
