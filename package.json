@@ -1,0 +1,26 @@
+{
+  "name": "validity-js",
+  "version": "1.0.0",
+  "description": "ValidityJS is a powerful and customizable library for validating form data in JavaScript",
+  "main": "validity.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thedhanawada/ValidityJS.git"
+  },
+  "keywords": [
+    "form",
+    "validation"
+  ],
+  "author": "Nirmala Rao Dhanawada",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thedhanawada/ValidityJS/issues"
+  },
+  "homepage": "https://github.com/thedhanawada/ValidityJS#readme",
+  "dependencies": {
+    "credit-card-type": "^9.1.0"
+  }
+}
