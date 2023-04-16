@@ -61,7 +61,7 @@ This example demonstrates how to use ValidityJS with a simple form containing va
   const validation = new ValidityJS(form);
 </script>
 ```
-##Features
+## Features
 - Built-in validation methods for required fields, credit card numbers, phone numbers, and confirm password fields
 - Supports conditional and async validation
 - Custom error messages
