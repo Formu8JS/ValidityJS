@@ -1,169 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ValidityJS Example</title>
-  <script src="dist/bundle.js"></script>
+  <title>ValidityJS Library</title>
   <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 20px;
-      background-color: #f1f1f1;
-      border-radius: 5px;
-    }
-
-    input[type="submit"],
-    button[type="submit"] {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1.2rem;
-    }
-
-    input[type="submit"]:hover,
-    button[type="submit"]:hover {
-      background-color: #3e8e41;
-    }
-
-    .error {
-      border: 1px solid red;
-    }
-
     .error-message {
       color: red;
-      font-size: 0.8rem;
-      margin-top: 5px;
     }
-
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
+    .error {
+      border-color: red;
     }
   </style>
+<script src="validate.js"></script>
 </head>
-
 <body>
-  <h1>ValidityJS Example</h1>
-
+  <h1>ValidityJS Library</h1>
   <p>
-    ValidityJS is a lightweight JavaScript library for validating form fields. It allows you to easily add validation
-    rules to your form fields, customize error messages, and perform conditional validation based on user input. Here are
-    some examples of what you can do with ValidityJS:
+    ValidityJS is a simple and flexible JavaScript form validation library. It provides built-in validation methods for required fields, credit card numbers, phone numbers, and confirm password fields. It also supports conditional and async validation.
   </p>
-  <h2>Required Field Validation</h2>
-  <form id="form1">
-    <div class="form-row">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
-    </div>
 
-    <div class="form-row">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
-    </div>
+  <h2>Usage</h2>
+  <p>
+    To use ValidityJS, instantiate the library with the form element and optional configuration:
+  </p>
+  <pre><code>
+const form = document.querySelector('#my-form');
+const validation = new ValidityJS(form, {
+  errorClass: 'error', // CSS class to apply on error
+  messages: {}, // Custom error messages
+  onSubmit: () => {}, // Callback function on successful form submission
+  conditionalValidation: {}, // Conditional validation rules
+  errorPosition: '.error-summary' // Default error message position
+});
+  </code></pre>
 
-    <div class="form-row">
-      <button type="submit">Submit</button>
-    </div>
-  </form>
+  <h2>Example</h2>
+  <p>
+    This example demonstrates how to use ValidityJS with a simple form containing various input types and validation rules.
+  </p>
 
-  <h2>Credit Card Number Validation</h2>
-  <form id="form2">
-    <div class="form-row">
-      <label for="cc-number">Credit Card Number</label>
-      <input type="text" id="cc-number" name="cc-number" data-cc-number required>
-    </div>
-
-    <div class="form-row">
-      <label for="expiry">Expiration Date (MM/YY)</label>
-      <input type="text" id="expiry" name="expiry" required>
-    </div>
-
-    <div class="form-row">
-      <label for="cvv">CVV</label>
-      <input type="text" id="cvv" name="cvv" required>
-    </div>
-
-    <div class="form-row">
-      <button type="submit">Submit</button>
-    </div>
-  </form>
-
-  <h2>Phone Number Validation</h2>
-  <form id="form3">
-    <div class="form-row">
-      <label for="phone">Phone Number</label>
-      <input type="tel" id="phone" name="phone" data-phone-number required>
-    </div>
+  <form id="example-form">
+    <label>
+      Name (required):
+      <input type="text" name="name" required />
+    </label>
+    <br />
+    <label>
+      Email (required):
+      <input type="email" name="email" required />
+    </label>
+    <br />
+    <label>
+      Phone Number (optional):
+      <input type="tel" name="phone" data-phone-number />
+    </label>
+    <br />
+    <label>
+      Credit Card Number (optional):
+      <input type="text" name="credit-card" data-cc-number />
+    </label>
+    <br />
+    <label>
+      Password (required):
+      <input type="password" name="password" required />
+    </label>
+    <br />
+    <label>
+      Confirm Password (required):
+      <input type="password" name="confirm-password" data-confirm-password="password" required />
+    </label>
+    <br />
     <button type="submit">Submit</button>
   </form>
 
-  <h2>Async Validation</h2>
-  <form id="form4">
-    <div class="form-row">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" data-async-validation="checkUsername" required>
-    </div>
-    <button type="submit">Submit</button>
-  </form>
-
-    <script>
-    // Required field validation
-    const form1 = new ValidityJS(document.getElementById('form1'), {
-      messages: {
-        'name': 'Please enter your full name',
-        'email': 'Please enter a valid email address'
-      }
-    });
-
-    // Credit card number validation
-    const form2 = new ValidityJS(document.getElementById('form2'), {
-      messages: {
-        'cc-number': 'Invalid credit card number',
-        'expiry': 'Invalid expiration date',
-        'cvv': 'Invalid CVV'
-      }
-    });
-
-    // Phone number validation
-    const form3 = new ValidityJS(document.getElementById('form3'), {
-      messages: {
-        'phone': 'Please enter a valid phone number'
-      }
-    });
-
-    // Async validation
-    const form4 = new ValidityJS(document.getElementById('form4'), {
-      messages: {
-        'username': 'This username is already taken'
-      }
-    });
-
-    async function checkUsername(username) {
-      // Simulate async validation with a timeout
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      return username !== 'john.doe';
-    }
+  <div class="error-summary"></div>
+  <script>
+    const form = document.querySelector('#example-form');
+    const validation = new ValidityJS(form);
   </script>
 </body>
 </html>
