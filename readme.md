@@ -1,74 +1,67 @@
-# ValidityJS Library
+# ValidityJS
 
-ValidityJS is a simple and flexible JavaScript form validation library. It provides built-in validation methods for required fields, credit card numbers, phone numbers, and confirm password fields. It also supports conditional and async validation.
+ValidityJS is a lightweight, easy-to-use form validation library for modern web applications. It provides real-time validation for input fields, including built-in support for common validation types such as required, credit card number, phone number, and password confirmation. ValidityJS also supports custom and asynchronous validation functions for more advanced use cases.
+
+## Features
+
+- Real-time validation
+- Built-in validation types
+- Custom validation functions
+- Asynchronous validation support
+- Conditional validation
+- Accessibility improvements with `aria-describedby`
+- Easy integration with existing projects
+
+## Installation
+
+Download the `validity.js` file and include it in your project:
+
+```html
+<script src="path/to/validity.js"></script>
+```
 
 ## Usage
 
-To use ValidityJS, instantiate the library with the form element and optional configuration:
-
-```javascript
+Initialize the library by passing a reference to the form element and an optional configuration object:
+```html
 const form = document.querySelector('#my-form');
-const validation = new ValidityJS(form, {
-  errorClass: 'error', // CSS class to apply on error
-  messages: {}, // Custom error messages
-  onSubmit: () => {}, // Callback function on successful form submission
-  conditionalValidation: {}, // Conditional validation rules
-  errorPosition: '.error-summary' // Default error message position
-});
+const validator = new ValidityJS(form, options);
 ```
-## Example
-This example demonstrates how to use ValidityJS with a simple form containing various input types and validation rules.
-```javascript
-<form id="example-form">
-  <label>
-    Name (required):
-    <input type="text" name="name" required />
-  </label>
-  <br />
-  <label>
-    Email (required):
-    <input type="email" name="email" required />
-  </label>
-  <br />
-  <label>
-    Phone Number (optional):
-    <input type="tel" name="phone" data-phone-number />
-  </label>
-  <br />
-  <label>
-    Credit Card Number (optional):
-    <input type="text" name="credit-card" data-cc-number />
-  </label>
-  <br />
-  <label>
-    Password (required):
-    <input type="password" name="password" required />
-  </label>
-  <br />
-  <label>
-    Confirm Password (required):
-    <input type="password" name="confirm-password" data-confirm-password="password" required />
-  </label>
-  <br />
+The options object can include the following properties:
+
+- errorClass (String): The CSS class to be added to invalid fields.
+- messages (Object): Custom error messages for specific fields or a default message.
+- onSubmit (Function): The function to be called when the form is submitted and all fields are valid.
+- conditionalValidation (Object): An object containing functions that determine whether a field should be validated.
+- errorPosition (String): A selector for the element where error messages will be displayed.
+- creditCardType (Function): A custom credit card type validation function.
+
+```html
+<form id="my-form">
+  <input type="text" name="username" required />
+  <input type="password" name="password" required />
+  <input type="password" name="password_confirm" data-confirm-password="password" required />
+  <input type="text" name="phone" data-phone-number required />
+  <input type="text" name="credit_card" data-cc-number required />
   <button type="submit">Submit</button>
 </form>
 
-<div class="error-summary"></div>
-
-<script src="https://cdn.skypack.dev/credit-card-type@11.1.0/dist/index.min.js"></script>
 <script>
-  const form = document.querySelector('#example-form');
-  const validation = new ValidityJS(form);
+  const form = document.querySelector('#my-form');
+  const options = {
+    errorClass: 'error',
+    messages: {
+      default: 'Please fill out this field',
+      phone: 'Invalid phone number',
+      credit_card: 'Invalid credit card number'
+    },
+    onSubmit: () => {
+      console.log('Form submitted!');
+    }
+  };
+  const validator = new ValidityJS(form, options);
 </script>
 ```
-## Features
-- Built-in validation methods for required fields, credit card numbers, phone numbers, and confirm password fields
-- Supports conditional and async validation
-- Custom error messages
-- Callback function on successful form submission
-- Default error message position can be customized
-- Exposes ValidityJS class globally for use in other scripts
-
 ## License
 
 ValidityJS is released under the [MIT license](https://raw.githubusercontent.com/thedhanawada/ValidityJS/main/LICENSE "MIT license"). This is a permissive open-source software license that allows for free use, modification, and distribution of the software without requiring payment or attribution.
