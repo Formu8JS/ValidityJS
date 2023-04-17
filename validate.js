@@ -1,3 +1,5 @@
+import creditCardType from 'credit-card-type';
+
 function luhnCheck(num) {
   // Implementation of the Luhn algorithm
   let sum = 0;
@@ -25,10 +27,18 @@ class ValidityJS {
       messages: {},
       onSubmit: () => {},
       conditionalValidation: {},
-      errorPosition: '.error-summary' // default error message position
+      errorPosition: '.error-summary', // default error message position
+      creditCardType: creditCardType // default credit card type library
     }, options);
     this.onSubmit = this.onSubmit.bind(this);
     this.form.addEventListener('submit', this.onSubmit);
+
+    // Add input event listeners to each field for real-time validation
+    this.form.querySelectorAll('input, select, textarea').forEach(field => {
+      field.addEventListener('input', () => {
+        this.validateField(field);
+      });
+    });
   }
 
   onSubmit(event) {
@@ -49,7 +59,6 @@ class ValidityJS {
       this.options.onSubmit();
     }
   }
-
   async validateField(field) {
     // Validate each field depending on its attributes and validation rules
     // Includes: required, credit card number, phone number, confirm password, and async validations
@@ -113,19 +122,18 @@ class ValidityJS {
 
   validateCreditCardNumber(number) {
     // Validate credit card number using the creditCardType library and Luhn algorithm
-    const cardTypes = creditCardType(number);
+    const cardTypes = this.options.creditCardType(number);
     if (cardTypes.length === 0) {
       return false;
     }
-  
+
     const cardType = cardTypes[0];
     if (cardType.type === 'visa' || cardType.type === 'mastercard' || cardType.type === 'amex' || cardType.type === 'discover') {
       return luhnCheck(number);
     }
-  
-    return false;
-  }    
 
+    return false;
+  }
   validatePhoneNumber(number) {
     // Validate phone number using a regular expression
 
@@ -140,21 +148,22 @@ class ValidityJS {
     if (errorPosition) {
       const errorElement = document.createElement('div');
       errorElement.classList.add('error-message');
+      errorElement.id = `${field.name}-error`;
       errorElement.textContent = message;
       errorPosition.appendChild(errorElement);
+      field.setAttribute('aria-describedby', errorElement.id);
     }
-    // Show an error message for the given field
   }
 
   hideError(field) {
-
     field.classList.remove(this.options.errorClass);
     const error = field.parentNode.querySelector('.error-message');
     if (error) {
       error.parentNode.removeChild(error);
+      field.removeAttribute('aria-describedby');
     }
-    // Hide the error message for the given field
   }
 }
+
 // Expose the ValidityJS class globally
 window.ValidityJS = ValidityJS;
