@@ -3,81 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ValidityJS Library</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl7/1L_dstPt3HV5HzF6Gvk/e3l8v7yz8gTGHU6beD" crossorigin="anonymous">
+  <title>ValidityJS Demo</title>
   <style>
-    .error-message {
-      color: red;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      padding-top: 100px;
+    }
+    .container {
+      max-width: 600px;
     }
     .error {
-      border-color: red;
+      border-color: #dc3545;
+    }
+    .error-message {
+      color: #dc3545;
+      font-size: 0.9em;
+      margin-top: 5px;
     }
   </style>
-<script src="validate.js"></script>
 </head>
 <body>
-  <h1>ValidityJS Library</h1>
-  <p>
-    ValidityJS is a simple and flexible JavaScript form validation library. It provides built-in validation methods for required fields, credit card numbers, phone numbers, and confirm password fields. It also supports conditional and async validation.
-  </p>
+  <div class="container">
+    <h1 class="mb-4">ValidityJS Demo</h1>
+    <form id="demo-form">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+        <div id="username-error" class="error-summary"></div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+        <div id="email-error" class="error-summary"></div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+        <div id="password-error" class="error-summary"></div>
+      </div>
+      <div class="mb-3">
+        <label for="password_confirm" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="password_confirm" name="password_confirm" data-confirm-password="password" required>
+        <div id="password_confirm-error" class="error-summary"></div>
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="phone" name="phone" data-phone-number required>
+        <div id="phone-error" class="error-summary"></div>
+      </div>
+      <div class="mb-3">
+        <label for="credit_card" class="form-label">Credit Card Number</label>
+        <input type="text" class="form-control" id="credit_card" name="credit_card" data-cc-number required>
+        <div id="credit_card-error" class="error-summary"></div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
 
-  <h2>Usage</h2>
-  <p>
-    To use ValidityJS, instantiate the library with the form element and optional configuration:
-  </p>
-  <pre><code>
-const form = document.querySelector('#my-form');
-const validation = new ValidityJS(form, {
-  errorClass: 'error', // CSS class to apply on error
-  messages: {}, // Custom error messages
-  onSubmit: () => {}, // Callback function on successful form submission
-  conditionalValidation: {}, // Conditional validation rules
-  errorPosition: '.error-summary' // Default error message position
-});
-  </code></pre>
-
-  <h2>Example</h2>
-  <p>
-    This example demonstrates how to use ValidityJS with a simple form containing various input types and validation rules.
-  </p>
-
-  <form id="example-form">
-    <label>
-      Name (required):
-      <input type="text" name="name" required />
-    </label>
-    <br />
-    <label>
-      Email (required):
-      <input type="email" name="email" required />
-    </label>
-    <br />
-    <label>
-      Phone Number (optional):
-      <input type="tel" name="phone" data-phone-number />
-    </label>
-    <br />
-    <label>
-      Credit Card Number (optional):
-      <input type="text" name="credit-card" data-cc-number />
-    </label>
-    <br />
-    <label>
-      Password (required):
-      <input type="password" name="password" required />
-    </label>
-    <br />
-    <label>
-      Confirm Password (required):
-      <input type="password" name="confirm-password" data-confirm-password="password" required />
-    </label>
-    <br />
-    <button type="submit">Submit</button>
-  </form>
-
-  <div class="error-summary"></div>
+  <script src="validity.js"></script>
   <script>
-    const form = document.querySelector('#example-form');
-    const validation = new ValidityJS(form);
+    const form = document.querySelector('#demo-form');
+    const options = {
+      errorClass: 'error',
+      messages: {
+        default: 'Please fill out this field',
+        phone: 'Invalid phone number',
+        credit_card: 'Invalid credit card number',
+        password_confirm: 'Passwords do not match',
+        email: 'Invalid email address'
+      },
+      onSubmit: () => {
+        console.log('Form submitted!');
+      },
+      errorPosition: (fieldName) => {
+        return document.querySelector(`#${fieldName}-error`);
+      }
+    };
+    const validator = new ValidityJS(form, options);
   </script>
 </body>
 </html>
